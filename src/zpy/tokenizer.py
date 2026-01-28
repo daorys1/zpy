@@ -5,7 +5,7 @@ import sys
 
 # Path to the keywords configuration file.
 # This assumes the script is run from the project root directory.
-KEYWORDS_CONFIG_PATH = "src/zpy/keywords.ini"
+KEYWORDS_CONFIG_PATH = "src/zpy/zh-Hans.ini"
 
 def load_keywords(config_path):
     """Loads the keyword translation map from an INI file."""
