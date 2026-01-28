@@ -19,10 +19,7 @@ print(f"结果是: {结果}")
         print(f"当前是: {i}")
 
 # Example using boolean keywords
-我的真值 = 为真
-我的假值 = 为假
-如果 我的真值 并且 (不是 我的假值): # '不是' (not) is a keyword, I should add it to keywords.json
+我的真值 = 真
+我的假值 = 假
+如果 我的真值 与 (非 我的假值):
     print("真值")
-
-# It seems I missed 'not' keyword. I will update keywords.json after this step if needed.
-# For now, let's proceed with this example and make a note to update keywords.json

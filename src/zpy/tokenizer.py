@@ -1,22 +1,28 @@
-import json
+import configparser
 import tokenize
 import io
 import sys
 
 # Path to the keywords configuration file.
 # This assumes the script is run from the project root directory.
-KEYWORDS_CONFIG_PATH = "src/zpy/keywords.json"
+KEYWORDS_CONFIG_PATH = "src/zpy/keywords.ini"
 
 def load_keywords(config_path):
-    """Loads the keyword translation map from a JSON file."""
+    """Loads the keyword translation map from an INI file."""
+    config = configparser.ConfigParser()
     try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print(f"Error: Keywords configuration file not found at {config_path}", file=sys.stderr)
-        return None
-    except json.JSONDecodeError:
-        print(f"Error: Could not decode JSON from {config_path}. Check file format.", file=sys.stderr)
+        # config.read() returns a list of files that were successfully read.
+        if not config.read(config_path, encoding='utf-8'):
+            print(f"Error: Keywords configuration file not found or is empty at {config_path}", file=sys.stderr)
+            return None
+        # Assuming all keywords are under the [Keywords] section
+        if 'Keywords' in config:
+            return dict(config['Keywords'])
+        else:
+            print(f"Error: [Keywords] section not found in {config_path}", file=sys.stderr)
+            return None
+    except configparser.Error as e:
+        print(f"Error parsing INI file {config_path}: {e}", file=sys.stderr)
         return None
 
 def translate_zpy_to_py(zpy_code, keyword_map):
