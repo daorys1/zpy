@@ -54,6 +54,8 @@ def run_zpy_file(filepath):
         exec(code_obj, exec_globals, exec_globals) # Use exec_globals for both globals and locals
     except Exception as e:
         print(f"An error occurred during execution of '{filepath}':\n{e}", file=sys.stderr)
+        print(e)
+        print(code_obj)
 
 
 def main():
