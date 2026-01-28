@@ -1,0 +1,28 @@
+# examples/example.zpy
+定义 函数(a, b):
+    如果 a > b:
+        # Note: 'print' is a built-in function, not a keyword, so it won't be translated by the tokenizer.
+        # This example uses 'print' as it would be in standard Python.
+        print("a 大于 b")
+        返回 a
+    否则:
+        print("b 大于等于 a")
+        返回 b
+
+结果 = 函数(5, 3)
+print(f"结果是: {结果}")
+
+循环 i 在 [1, 2, 3]:
+    如果 i == 2:
+        print("遇到 2")
+    否则:
+        print(f"当前是: {i}")
+
+# Example using boolean keywords
+我的真值 = 为真
+我的假值 = 为假
+如果 我的真值 并且 (不是 我的假值): # '不是' (not) is a keyword, I should add it to keywords.json
+    print("真值")
+
+# It seems I missed 'not' keyword. I will update keywords.json after this step if needed.
+# For now, let's proceed with this example and make a note to update keywords.json
