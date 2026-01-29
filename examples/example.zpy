@@ -1,21 +1,22 @@
 # examples/example.zpy
-定义 函数(a, b):
-    如果 a > b:
+定义 取较大值(左值, 右值):
+    如果 左值 > 右值:
         # Using Chinese alias for print
-        打印("a 大于 b")
-        返回 a
+        打印("左值 大于 右值")
+        返回 左值
     否则:
-        打印("b 大于等于 a")
-        返回 b
+        打印("右值 大于等于 左值")
+        返回 右值
 
-结果 = 函数(5, 3)
+结果 = 取较大值(5, 3)
 打印(f"结果是: {结果}")
 
-循环 i 在 [1, 2, 3]:
-    如果 i == 2:
-        打印("遇到 2")
+循环 数字 在 [1, 2, 3]:
+    如果 数字 == 2:
+        打印("遇到 2，继续下一次循环")
+        继续
     否则:
-        打印(f"当前是: {i}")
+        打印(f"当前是: {数字}")
 
 # Example using boolean keywords
 我的真值 = 真
@@ -28,9 +29,45 @@
 列表长度 = 长度(列表数据)
 打印(f"列表的长度是: {列表长度}")
 
+# Example using else-if and null keyword
+分数 = 85
+如果 分数 >= 90:
+    打印("等级: A")
+否则如果 分数 >= 80:
+    打印("等级: B")
+否则:
+    打印("等级: C")
+
+空值示例 = 空
+如果 空值示例 是 空:
+    打印("空值已就绪")
+
+# Example using while, break, and continue
+计数 = 0
+当 真:
+    计数 = 计数 + 1
+    如果 计数 == 2:
+        打印("跳过 2")
+        继续
+    如果 计数 > 3:
+        打印("结束循环")
+        中断
+    打印(f"计数: {计数}")
+
+# Example using class keyword
+类 加法器:
+    定义 __init__(自身, 基数):
+        自身.基数 = 基数
+
+    定义 加上(自身, 增量):
+        返回 自身.基数 + 增量
+
+加法 = 加法器(10)
+打印(f"加法结果: {加法.加上(5)}")
+
 # Example using exception alias (will raise an error)
 尝试:
     # Some code that might raise an error
-    x = 1 / 0
+    被除数 = 1 / 0
 异常 错误: # Using alias for Exception
     打印("捕获到错误！")
