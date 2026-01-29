@@ -3,6 +3,7 @@ import os
 import builtins # Import builtins module to copy its dict
 import types
 from .tokenizer import translate_zpy_to_py, load_keywords, KEYWORDS_CONFIG_PATH
+from .importer import ZpyMetaPathFinder
 from .runtime import bootstrap
 
 def run_zpy_file(filepath):
@@ -32,6 +33,9 @@ def run_zpy_file(filepath):
     if python_code is None:
         print("Failed to translate the code. Exiting.", file=sys.stderr)
         return
+
+    finder = ZpyMetaPathFinder(keyword_map, builtins_map)
+    sys.meta_path.insert(0, finder)
 
     # Execute the translated code
     try:
@@ -70,6 +74,9 @@ def run_zpy_file(filepath):
         print(f"An error occurred during execution of '{filepath}':\n{e}", file=sys.stderr)
         print(e)
         print(code_obj)
+    finally:
+        if finder in sys.meta_path:
+            sys.meta_path.remove(finder)
 
 
 def main():
