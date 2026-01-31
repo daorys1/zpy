@@ -13,18 +13,21 @@ class ZpyLoader(importlib.abc.Loader):
     def __init__(self, filepath, fullname, is_package, keyword_map, builtins_map):
         self.filepath = filepath
         self.fullname = fullname
-        self.is_package = is_package
+        self._is_package = is_package
         self.keyword_map = keyword_map
         self.builtins_map = builtins_map
 
     def create_module(self, spec):
         return None
 
+    def is_package(self, fullname):
+        return self._is_package
+
     def exec_module(self, module):
         module.__file__ = self.filepath
         module.__loader__ = self
-        module.__package__ = self.fullname if self.is_package else self.fullname.rpartition(".")[0]
-        if self.is_package:
+        module.__package__ = self.fullname if self._is_package else self.fullname.rpartition(".")[0]
+        if self._is_package:
             module.__path__ = [os.path.dirname(self.filepath)]
 
         module.__dict__.setdefault("__builtins__", dict(builtins.__dict__))
@@ -52,12 +55,13 @@ class ZpyMetaPathFinder(importlib.abc.MetaPathFinder):
     def find_spec(self, fullname, path=None, target=None):
         search_paths = sys.path if path is None else path
         parts = fullname.split(".")
+        module_parts = parts if path is None else parts[-1:]
 
         for base_path in search_paths:
             if base_path == "":
                 base_path = os.getcwd()
 
-            package_path = os.path.join(base_path, *parts)
+            package_path = os.path.join(base_path, *module_parts)
             zpy_init = os.path.join(package_path, "__init__.zpy")
             if os.path.isfile(zpy_init):
                 loader = ZpyLoader(
@@ -84,7 +88,7 @@ class ZpyMetaPathFinder(importlib.abc.MetaPathFinder):
                     submodule_search_locations=[package_path],
                 )
 
-            zpy_module = os.path.join(base_path, *parts) + ".zpy"
+            zpy_module = os.path.join(base_path, *module_parts) + ".zpy"
             if os.path.isfile(zpy_module):
                 loader = ZpyLoader(
                     zpy_module,
@@ -99,7 +103,7 @@ class ZpyMetaPathFinder(importlib.abc.MetaPathFinder):
                     loader=loader,
                 )
 
-            py_module = os.path.join(base_path, *parts) + ".py"
+            py_module = os.path.join(base_path, *module_parts) + ".py"
             if os.path.isfile(py_module):
                 loader = importlib.machinery.SourceFileLoader(fullname, py_module)
                 return importlib.util.spec_from_file_location(
