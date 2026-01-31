@@ -1,4 +1,4 @@
-# examples/import_example.zpy
+# examples/数学导入示例.zpy
 导入 math
 从 math 导入 sqrt 作为 开平方
 

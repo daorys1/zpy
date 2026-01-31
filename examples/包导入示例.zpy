@@ -1,4 +1,4 @@
-# examples/package_import.zpy
+# examples/包导入示例.zpy
 导入 示例包
 从 示例包 导入 工具 作为 工具模块
 
