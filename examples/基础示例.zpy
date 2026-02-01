@@ -1,4 +1,4 @@
-# examples/example.zpy
+# examples/基础示例.zpy
 定义 取较大值(左值, 右值):
     如果 左值 > 右值:
         # Using Chinese alias for print

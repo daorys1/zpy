@@ -1,0 +1,5 @@
+# examples/导入.zpy
+导入 math
+
+圆周率 = math.pi
+打印(f"圆周率: {圆周率:.2f}")
