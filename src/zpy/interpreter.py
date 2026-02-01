@@ -6,7 +6,7 @@ from .tokenizer import translate_zpy_to_py, load_keywords, KEYWORDS_CONFIG_PATH
 from .importer import ZpyMetaPathFinder
 from .runtime import bootstrap
 
-def run_zpy_file(filepath):
+def run_zpy_file(filepath, args=None):
     """
     Translates and executes a .zpy file within a controlled environment.
     """
@@ -56,7 +56,7 @@ def run_zpy_file(filepath):
         bootstrap(exec_globals['__builtins__'], builtins_map)
         # Compile the code object for better traceback information
         code_obj = compile(python_code, os.path.abspath(filepath), "exec")
-        sys.argv = [filepath]
+        sys.argv = [filepath] + (args or [])
 
         # Execute the compiled code
         exec(code_obj, exec_globals, exec_globals) # Use exec_globals for both globals and locals
@@ -83,13 +83,13 @@ def main():
     """
     Main function to run the zpy interpreter from the command line.
     """
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         # Corrected usage message for running as a module
-        print(f"Usage: python -m src.zpy.interpreter <input_zpy_file>", file=sys.stderr)
+        print("Usage: python -m src.zpy.interpreter <input_zpy_file> [args...]", file=sys.stderr)
         sys.exit(1)
 
     input_zpy_file = sys.argv[1]
-    run_zpy_file(input_zpy_file)
+    run_zpy_file(input_zpy_file, sys.argv[2:])
 
 if __name__ == "__main__":
     main()

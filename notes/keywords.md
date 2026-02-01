@@ -96,7 +96,7 @@ Resource management
 
 | English Keyword | Chinese Translation | Pinyin | Usage Context |
 |----------------|---------------------|---------|---------------|
-| with | 与...一起 | yǔ...yìqǐ | Context manager |
+| with | 使用 | shǐyòng | Context manager |
 
 ### 12. Scope Declaration (2)
 Variable scope
@@ -189,7 +189,7 @@ Miscellaneous control
 ### Context Manager
 | Keyword | Alternative 1 | Alternative 2 | Alternative 3 |
 |---------|--------------|--------------|---------------|
-| with | 使用 (shǐyòng) | 用 (yòng) | - |
+| with | 与...一起 (yǔ...yìqǐ) | 用 (yòng) | - |
 
 ### Scope Declaration
 | Keyword | Alternative 1 | Alternative 2 | Alternative 3 |
